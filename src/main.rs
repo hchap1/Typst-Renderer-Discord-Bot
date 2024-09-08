@@ -121,26 +121,23 @@ impl EventHandler for Handler {
                 if command.chars().nth(0).unwrap() == '!' {
                     let _ = msg.channel_id.say(&ctx.http, "Invalid command.").await;
                 } else {
-                    let dollar_count: usize = args.matches('$').count();
-                    if dollar_count == 2 {
-                        if let Some(start) = args.find('$') {
-                            if let Some(end) = args[start + 1..].find('$') {
-                                let end = start + end + 1;
-                                let result = &args[start..=end];
-                                let mut file = File::create("buf.typ").unwrap();
-                                let mut content: String = String::from("#set page(width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
-                                content += result;
-                                let _ = file.write_all(content.as_bytes());
-                                let o = Command::new("typst").arg("compile").arg("--ppi").arg("256").arg("buf.typ").arg("buf.png").status().unwrap();
-                                match o.success() {
-                                    true => {
-                                        let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
-                                        let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("Rendered.")).await.unwrap();
-                                    }
-                                    _ => {
-                                        let _ = msg.channel_id.say(&ctx.http, "Typst compile error. Silly!");
-                                    }
-                                }
+                let dollar_indices: Vec<usize> = args.match_indices('$').map(|x| x.0).collect();
+                    if dollar_indices.len() == 2 {
+                        let start: usize = dollar_indices[0] + 1;
+                        let end: usize = dollar_indices[1];
+                        let result = &args[start..end];
+                        let mut file = File::create("buf.typ").unwrap();
+                        let mut content: String = String::from("#set page(width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
+                        content += result;
+                        let _ = file.write_all(content.as_bytes());
+                        let o = Command::new("typst").arg("compile").arg("--ppi").arg("256").arg("buf.typ").arg("buf.png").status().unwrap();
+                        match o.success() {
+                            true => {
+                                let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
+                                let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("Rendered.")).await.unwrap();
+                            }
+                            _ => {
+                                let _ = msg.channel_id.say(&ctx.http, "Typst compile error. Silly!");
                             }
                         }
                     }
