@@ -20,11 +20,14 @@ impl EventHandler for Handler {
             return;
         }
         let msg_content: String = msg.content.clone();
-        println!("CONTENT: |{msg_content}|");
         let mut message: Vec<String> = msg_content.replacen('\n', " ", 1).split(" ").map(|x| x.to_string()).collect();
         let command: String = message.remove(0);
-        let args = message.join(" ");
-        println!("ARGS: |{args}|");
+        let mut args = message.join(" ");
+        if let Some(c) = command.chars().nth(0) {
+            if c != '!' {
+                args = command.clone() + &args;
+            }
+        }
         match command.as_str() {
             "!ping" => { let _ = msg.channel_id.say(&ctx.http, "pong!").await; }
             "!render" => {
