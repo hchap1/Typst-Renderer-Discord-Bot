@@ -1,0 +1,97 @@
+Light from the Sun takes about 8 minutes and 20 seconds to reach Earth.
+A single strand of spider silk is stronger than steel of the same thickness.
+The Fibonacci sequence appears in various natural phenomena, including the arrangement of leaves on a stem.
+There are more possible iterations of a game of chess than there are atoms in the observable universe.
+The square root of 2 is an irrational number, meaning it cannot be expressed as a simple fraction.
+The speed of light in a vacuum is approximately 299,792,458 meters per second.
+There are 86,400 seconds in a day.
+The first computer virus was created in 1983 and was called the “Elk Cloner.”
+Pi (π) is a transcendental number, meaning it is not the root of any non-zero polynomial equation with rational coefficients.
+The human brain has about 86 billion neurons.
+The Mandelbrot set is a complex fractal shape that has infinite complexity.
+The probability of rolling a Yahtzee (five of a kind) with a single roll is 1 in 1,296.
+There are 7 types of quarks, which are elementary particles that make up protons and neutrons.
+The concept of zero as a number was first developed in ancient India.
+The longest known prime number has 24,862,048 digits.
+The number e (approximately 2.718) is the base of natural logarithms and is an irrational number.
+An octopus has three hearts and blue blood.
+The concept of an algorithm dates back to ancient Persia.
+The human genome contains about 3 billion base pairs.
+In programming, “Hello, World!” is often used as the first test program to check if a language is functioning correctly.
+The golden ratio (approximately 1.618) appears in various aspects of art, architecture, and nature.
+The Voyager 1 spacecraft, launched in 1977, is the farthest human-made object from Earth.
+A Turing machine is a theoretical device that can simulate any computer algorithm.
+The sum of the interior angles of a polygon with n sides is (n-2) × 180 degrees.
+An infinite loop in programming occurs when a set of instructions continues endlessly without termination.
+There are 10^80 atoms in the observable universe.
+A ruby can scratch a diamond because it is harder on the Mohs scale of mineral hardness.
+The largest known prime number is used in cryptography to secure digital communications.
+The Planck length is approximately 1.6 × 10^-35 meters, the smallest measurable length.
+In programming, a "bug" refers to an error or flaw in the code.
+The number of possible Sudoku puzzles is 6,670,903,752,021,072,936,960.
+Newton’s laws of motion form the foundation of classical mechanics.
+A full rotation of a circle is 360 degrees, but in radians, it is 2π.
+In quantum computing, qubits can exist in multiple states simultaneously, thanks to superposition.
+The concept of entropy in information theory measures the uncertainty in a set of data.
+The Riemann Hypothesis is a famous unsolved problem in mathematics related to the distribution of prime numbers.
+The length of a day on Venus is longer than a year on Venus.
+There are 12 cranial nerves in the human body that connect the brain to various sensory organs and muscles.
+The Möbius strip is a surface with only one side and one edge.
+The Hubble Space Telescope has helped scientists determine the rate of expansion of the universe.
+The Fibonacci sequence starts with 0 and 1, and each subsequent number is the sum of the two preceding ones.
+An algorithm is a step-by-step procedure for solving a problem or performing a task.
+A binary tree is a data structure in which each node has at most two children.
+The Lorenz attractor is a set of chaotic solutions to the Lorenz system of differential equations.
+The Heisenberg Uncertainty Principle states that you cannot simultaneously know both the position and momentum of a particle with arbitrary precision.
+The concept of mathematical induction is used to prove statements about natural numbers.
+The speed of sound in air is approximately 343 meters per second.
+The average human body temperature is around 37 degrees Celsius.
+There are 60 minutes in an hour, and 60 seconds in a minute, a system derived from ancient Babylonians.
+The Java programming language was designed to have as few implementation dependencies as possible.
+The double-slit experiment demonstrates that light and matter can exhibit characteristics of both waves and particles.
+The periodic table contains 118 confirmed elements, with new elements being added as they are discovered.
+The Hamming distance measures the number of positions at which two strings of equal length differ.
+A hash function maps input data of arbitrary size to a fixed-size output.
+The Doppler effect causes a change in frequency or wavelength of a wave in relation to an observer moving relative to the source.
+The Chebyshev distance is a metric defined on a grid-based path, useful in chessboard problems.
+The concept of fractals describes complex shapes that look similar at any level of magnification.
+Euler's formula connects complex exponentials with trigonometric functions: e^(iθ) = cos(θ) + i*sin(θ).
+A data structure like a stack operates on a Last In, First Out (LIFO) principle.
+The Golden Ratio can be approximated by the fraction 21/13.
+The universe is estimated to be about 13.8 billion years old.
+In computer science, Big O notation describes the performance or complexity of an algorithm in terms of time or space.
+The largest known star is UY Scuti, with a radius approximately 1,700 times that of the Sun.
+The concept of parallel lines in Euclidean geometry is that they never meet, no matter how far they are extended.
+The minimum number of colors needed to color a map so that no adjacent regions share the same color is four, according to the Four Color Theorem.
+The Turing test is a measure of a machine's ability to exhibit intelligent behavior indistinguishable from that of a human.
+A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.
+The first programmable computer was the Z3, invented by Konrad Zuse in 1941.
+The Schrödinger equation describes how the quantum state of a physical system changes over time.
+The Great Wall of China is over 13,000 miles long.
+In probability theory, the Monty Hall problem demonstrates that switching choices increases your chances of winning.
+A quantum superposition allows particles to exist in multiple states at once.
+The Fibonacci sequence can be used to model population growth in biology.
+The Halting Problem is a decision problem about whether a given program will terminate or run forever.
+The value of π is known to over 31 trillion digits.
+The density of water is about 1 gram per cubic centimeter.
+The number 42 is famously known as the "Answer to the Ultimate Question of Life, the Universe, and Everything" from Douglas Adams' "The Hitchhiker’s Guide to the Galaxy."
+A self-replicating program, or "virus," can duplicate itself to spread to other computers.
+The Planck constant is a fundamental constant in quantum mechanics, approximately 6.626 × 10^-34 Js.
+The cube root of 27 is 3.
+The concept of imaginary numbers extends the real number system to include √-1, denoted as i.
+The longest English word without a vowel is "rhythms."
+The average adult human body is made up of about 60% water.
+The Riemann Zeta function is a complex function that plays a key role in number theory and the distribution of prime numbers.
+The first computer mouse was made of wood and was invented by Douglas Engelbart in 1964.
+The concept of entropy in thermodynamics measures the disorder or randomness in a system.
+The Pythagorean theorem relates the lengths of the sides of a right-angled triangle: a² + b² = c².
+The Google search engine was originally called "Backrub."
+The Heaviside step function is used in signal processing and control theory to model sudden changes.
+The average human breathes about 22,000 times a day.
+A “for loop” in programming is used to repeat a block of code a specified number of times.
+The Fermi paradox questions why, given the vast number of stars in the galaxy, we have not yet detected extraterrestrial life.
+The word "algorithm" is named after the Persian mathematician Al-Khwarizmi.
+The Mandelbrot set is named after mathematician Benoît B. Mandelbrot, who studied it extensively.
+A Möbius strip has only one surface and one edge, making it an interesting object in topology.
+The Sieve of Eratosthenes is an ancient algorithm used to find all prime numbers up to a specified integer.
+The term "bug" in computing was coined after a real moth was found causing issues in an early computer.

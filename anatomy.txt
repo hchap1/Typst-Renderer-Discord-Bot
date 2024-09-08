@@ -1,0 +1,74 @@
+Skull
+Cranium
+Mandible
+Cervical vertebrae
+Thoracic vertebrae
+Lumbar vertebrae
+Sacrum
+Coccyx
+Ribs
+Sternum
+Clavicle
+Scapula
+Humerus
+Radius
+Ulna
+Carpals
+Metacarpals
+Phalanges
+Ilium
+Ischium
+Pubis
+Femur
+Patella
+Tibia
+Fibula
+Tarsals
+Brain
+Heart
+Lungs
+Liver
+Kidneys
+Stomach
+Small intestine
+Large intestine
+Pancreas
+Spleen
+Gallbladder
+Bladder
+Ovaries
+Testes
+Uterus
+Thyroid gland
+Adrenal glands
+Orbicularis oculi
+Orbicularis oris
+Masseter
+Sternocleidomastoid
+Trapezius
+Pectoralis major
+Rectus abdominis
+External oblique
+Internal oblique
+Transversus abdominis
+Latissimus dorsi
+Erector spinae
+Rhomboids
+Deltoid
+Biceps brachii
+Triceps brachii
+Brachialis
+Flexor carpi radialis
+Extensor carpi radialis
+Thenar muscles
+Hypothenar muscles
+Gluteus maximus
+Gluteus medius
+Gluteus minimus
+Quadriceps
+Hamstrings
+Sartorius
+Gastrocnemius
+Soleus
+Flexor digitorum brevis
+Extensor digitorum brevis
