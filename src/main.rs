@@ -3,7 +3,7 @@ use std::path::Path;
 use std::io::prelude::*;
 use std::fs::read_to_string;
 use std::fs::File;
-use std::process::Command;
+use std::process::{Command, Output};
 use serenity::async_trait;
 use serenity::all::{CreateAttachment, CreateMessage};
 use serenity::model::channel::Message;
@@ -16,15 +16,20 @@ struct Handler;
 #[async_trait]
 impl EventHandler for Handler {
     async fn message(&self, ctx: Context, msg: Message) {
+        if msg.author.name == String::from("TimeParadox_Bot") {
+            return;
+        }
         let msg_content: String = msg.content.clone();
+        println!("CONTENT: |{msg_content}|");
         let mut message: Vec<String> = msg_content.replacen('\n', " ", 1).split(" ").map(|x| x.to_string()).collect();
         let command: String = message.remove(0);
         let args = message.join(" ");
+        println!("ARGS: |{args}|");
         match command.as_str() {
             "!ping" => { let _ = msg.channel_id.say(&ctx.http, "pong!").await; }
             "!render" => {
                 let mut file = File::create("buf.typ").unwrap();
-                let mut content: String = String::from("#set page(width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
+                let mut content: String = String::from("#set text(fill: rgb(\"eeeeee\"))\n#set page(fill: rgb(\"313338\"), width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
                 let args = args.split("```").map(|x| x.to_string()).collect::<Vec<String>>();
                 content += &args[1];
                 let mut ppi: usize = 256;
@@ -40,50 +45,84 @@ impl EventHandler for Handler {
                     }
                 }
                 let _ = file.write_all(content.as_bytes());
-                let o = Command::new("typst").arg("compile").arg("--ppi").arg(ppi.to_string()).arg("buf.typ").arg("buf.png").status().unwrap();
-                match o.success() {
-                    true => {
+                match Command::new("typst").arg("compile").arg("--ppi").arg(ppi.to_string()).arg("buf.typ").arg("buf.png").output() {
+                    Ok(o) if o.status.success() => {
                         let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
-                        let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("Rendered.")).await.unwrap();
+                        let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("")).await.unwrap();
                     }
-                    _ => {
-                        let _ = msg.channel_id.say(&ctx.http, "Typst compile error. Silly!");
+                    Ok(Output { stderr, .. }) => {
+                        let error_message = String::from_utf8_lossy(&stderr);
+                        let _ = msg.channel_id.say(&ctx.http, format!("Typst compile error: {}", error_message)).await;
+                    }
+                    Err(e) => {
+                        let _ = msg.channel_id.say(&ctx.http, &format!("Typst compile error.\n{e}"));
                     }
                 }
             }
             "!rm" => {
                 let mut file = File::create("buf.typ").unwrap();
-                let mut content: String = String::from("#set page(width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
+                let mut content: String = String::from("#set text(fill: rgb(\"eeeeee\"))\n#set page(fill: rgb(\"313338\"), width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
+                let args = args.split("```").map(|x| x.to_string()).collect::<Vec<String>>();
                 content += "$";
-                content += &args.split("```").map(|x| x.to_string()).collect::<Vec<String>>()[1];
+                content += &args[1];
                 content += "$";
-                let _ = file.write_all(content.as_bytes());
-                let o = Command::new("typst").arg("compile").arg("--ppi").arg("256").arg("buf.typ").arg("buf.png").status().unwrap();
-                match o.success() {
-                    true => {
-                        let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
-                        let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("Rendered.")).await.unwrap();
+                let mut ppi: usize = 256;
+                if content.len() > 1 {
+                    let ppi_arg: String = args[2].clone();
+                    let split_arg: Vec<String> = ppi_arg.split("=").map(|x| x.to_string()).collect();
+                    if split_arg[0] == String::from(" --ppi") {
+                        if let Ok(ppi_val) = &split_arg[1].parse() {
+                            ppi = *ppi_val;
+                        } else {
+                            let _ = msg.channel_id.say(&ctx.http, "Invalid PPI argument. Expected integer.");
+                        }
                     }
-                    _ => {
-                        let _ = msg.channel_id.say(&ctx.http, "Typst compile error. Silly!");
+                }
+                let _ = file.write_all(content.as_bytes());
+                match Command::new("typst").arg("compile").arg("--ppi").arg(ppi.to_string()).arg("buf.typ").arg("buf.png").output() {
+                    Ok(o) if o.status.success() => {
+                        let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
+                        let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("")).await.unwrap();
+                    }
+                    Ok(Output { stderr, .. }) => {
+                        let error_message = String::from_utf8_lossy(&stderr);
+                        let _ = msg.channel_id.say(&ctx.http, format!("Typst compile error: {}", error_message)).await;
+                    }
+                    Err(e) => {
+                        let _ = msg.channel_id.say(&ctx.http, &format!("Typst compile error.\n{e}"));
                     }
                 }
             }
             "!qm" => {
                 let mut file = File::create("buf.typ").unwrap();
-                let mut content: String = String::from("#set page(width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
+                let mut content: String = String::from("#set text(fill: rgb(\"eeeeee\"))\n#set page(fill: rgb(\"313338\"), width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
                 content += "$";
                 content += &args;
                 content += "$";
-                let _ = file.write_all(content.as_bytes());
-                let o = Command::new("typst").arg("compile").arg("--ppi").arg("256").arg("buf.typ").arg("buf.png").status().unwrap();
-                match o.success() {
-                    true => {
-                        let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
-                        let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("Rendered.")).await.unwrap();
+                let mut ppi: usize = 256;
+                if content.len() > 1 {
+                    let ppi_arg: String = args.split(' ').map(|x| x.to_string()).collect::<Vec<String>>().last().unwrap().to_string();
+                    let split_arg: Vec<String> = ppi_arg.split("=").map(|x| x.to_string()).collect();
+                    if split_arg[0] == String::from(" --ppi") {
+                        if let Ok(ppi_val) = &split_arg[1].parse() {
+                            ppi = *ppi_val;
+                        } else {
+                            let _ = msg.channel_id.say(&ctx.http, "Invalid PPI argument. Expected integer.");
+                        }
                     }
-                    _ => {
-                        let _ = msg.channel_id.say(&ctx.http, "Typst compile error. Silly!");
+                }
+                let _ = file.write_all(content.as_bytes());
+                match Command::new("typst").arg("compile").arg("--ppi").arg(ppi.to_string()).arg("buf.typ").arg("buf.png").output() {
+                    Ok(o) if o.status.success() => {
+                        let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
+                        let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("")).await.unwrap();
+                    }
+                    Ok(Output { stderr, .. }) => {
+                        let error_message = String::from_utf8_lossy(&stderr);
+                        let _ = msg.channel_id.say(&ctx.http, format!("Typst compile error: {}", error_message)).await;
+                    }
+                    Err(e) => {
+                        let _ = msg.channel_id.say(&ctx.http, &format!("Typst compile error.\n{e}"));
                     }
                 }
             }
@@ -118,26 +157,32 @@ impl EventHandler for Handler {
                 let _ = msg.channel_id.say(&ctx.http, message).await;
             }
             _ => {
-                if command.chars().nth(0).unwrap() == '!' {
-                    let _ = msg.channel_id.say(&ctx.http, "Invalid command.").await;
-                } else {
-                let dollar_indices: Vec<usize> = args.match_indices('$').map(|x| x.0).collect();
-                    if dollar_indices.len() == 2 {
-                        let start: usize = dollar_indices[0] + 1;
-                        let end: usize = dollar_indices[1];
-                        let result = &args[start..end];
-                        let mut file = File::create("buf.typ").unwrap();
-                        let mut content: String = String::from("#set page(width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
-                        content += result;
-                        let _ = file.write_all(content.as_bytes());
-                        let o = Command::new("typst").arg("compile").arg("--ppi").arg("256").arg("buf.typ").arg("buf.png").status().unwrap();
-                        match o.success() {
-                            true => {
-                                let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
-                                let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("Rendered.")).await.unwrap();
-                            }
-                            _ => {
-                                let _ = msg.channel_id.say(&ctx.http, "Typst compile error. Silly!");
+                if let Some(c) = command.chars().nth(0) {
+                    if c == '!' { let _ = msg.channel_id.say(&ctx.http, "Invalid command.").await; }
+                    else {
+                        let dollar_indices: Vec<usize> = args.match_indices('$').map(|x| x.0).collect();
+                        if dollar_indices.len() == 2 {
+                            let start: usize = dollar_indices[0] + 1;
+                            let end: usize = dollar_indices[1];
+                            let result = &args[start..end];
+                            let mut file = File::create("buf.typ").unwrap();
+                            let mut content: String = String::from("#set text(fill: rgb(\"eeeeee\"))\n#set page(fill: rgb(\"313338\"), width: auto, height: auto, margin: (top: 0.3cm, bottom: 0.3cm, left: 0.3cm, right: 0.3cm))\n");
+                            content += "$";
+                            content += result;
+                            content += "$";
+                            let _ = file.write_all(content.as_bytes());
+                            match Command::new("typst").arg("compile").arg("buf.typ").arg("buf.png").output() {
+                                Ok(o) if o.status.success() => {
+                                    let attachment = CreateAttachment::path(Path::new("buf.png")).await.unwrap();
+                                    let _ = msg.channel_id.send_files(&ctx, vec![attachment], CreateMessage::new().content("")).await.unwrap();
+                                }
+                                Ok(Output { stderr, .. }) => {
+                                    let error_message = String::from_utf8_lossy(&stderr);
+                                    let _ = msg.channel_id.say(&ctx.http, format!("Typst compile error: {}", error_message)).await;
+                                }
+                                Err(e) => {
+                                    let _ = msg.channel_id.say(&ctx.http, &format!("Typst compile error.\n{e}"));
+                                }
                             }
                         }
                     }
